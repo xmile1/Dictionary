@@ -69,6 +69,7 @@ class FirebaseReactNative extends Component {
         items.push({
           french: child.val().french,
           english: child.val().english,
+          english_erudite: child.val().english_erudite,
           _key: child.key
         });
       });
@@ -108,7 +109,7 @@ class FirebaseReactNative extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ListItem item={item} onPress={() =>
-          navigate('Details' )}  />
+          navigate('Details', {...item} )}  />
     );
   }
 

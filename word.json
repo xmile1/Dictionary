@@ -1,12 +1,12 @@
 {
-  "items":{
-    "t'es bonne":{
-    "french": "t'es bonne",
-    "english": "You're a hot chick",
-    },
-    "t'es bonne":{
-    "french": "t'es bonne",
-    "english": "You're a hot chick",
-    }
-  }
+    "items": {
+        "t'es bonne": {
+            "french": "you're good",
+            "english": "hot chick"
+            }
+          "Test 2": {
+            "french": "galère",
+            "english": "mess"
+            }
+          }
 }

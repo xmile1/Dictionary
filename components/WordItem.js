@@ -8,17 +8,15 @@ const { View, TouchableHighlight, Text } = ReactNative;
 
 class WordItem extends Component {
 
-constructor(props){
-    super(props)
-  }
 
   render() {
+const {english, english_erudite} = this.props.navigation.state.params;
 
     return (
       <TouchableHighlight>
         <View style={styles.li}>
-          <Text style={styles.liText} >{this.props.english}</Text>
-          <Text style={styles.liText} >This is a test</Text>
+          <Text style={styles.liText} >{english}</Text>
+          <Text style={styles.liText} >{english_erudite}</Text>
         </View>
       </TouchableHighlight>
     );
