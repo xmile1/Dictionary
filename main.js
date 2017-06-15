@@ -1,8 +1,9 @@
 
 'use strict';
 import Expo from 'expo';
-import React, {Component} from 'react';
+import React, {Component, TextInput} from 'react';
 import ReactNative from 'react-native';
+import SearchBar from 'react-native-searchbar';
 const firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
@@ -18,6 +19,7 @@ const {
   Text,
   View,
   TouchableHighlight,
+  TouchableOpacity,
 } = ReactNative;
 
 
@@ -40,21 +42,28 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 
 
+
 class FirebaseReactNative extends Component {
 
  static navigationOptions = {
     title: 'Welcome',
   };
 
+
+
   constructor(props) {
     super(props);
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      })
+      }),
+      items: []
     };
     this.itemsRef = this.getRef().child('items');
+    this._handleResults = this._handleResults.bind(this);
   }
+
+
 
   getRef() {
     return firebaseApp.database().ref();
@@ -75,23 +84,40 @@ class FirebaseReactNative extends Component {
       });
 
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(items)
+        dataSource: this.state.dataSource.cloneWithRows(items),
+        items: items
       });
 
     });
   }
 
+
   componentDidMount() {
     this.listenForItems(this.itemsRef);
   }
 
+
+
   render() {
     const { navigate } = this.props.navigation;
+
+
+
     return (
+
       <View style={styles.container}>
+
 
         <StatusBar title="Street French" />
 
+
+        <SearchBar
+          ref={(ref) => this.searchBar = ref}
+          data={this.state.items}
+          handleResults={this._handleResults.bind(this)}
+          showOnLoad
+          allDataOnEmptySearch
+        />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderItem.bind(this)}
@@ -111,6 +137,10 @@ class FirebaseReactNative extends Component {
       <ListItem item={item} onPress={() =>
           navigate('Details', {...item} )}  />
     );
+  }
+
+  _handleResults(results){
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(results)})
   }
 
 }
