@@ -1,7 +1,6 @@
-
 'use strict';
 import Expo from 'expo';
-import React, {Component, TextInput} from 'react';
+import React, {Component, TextInput, ActivityIndicator} from 'react';
 import ReactNative from 'react-native';
 import SearchBar from 'react-native-searchbar';
 const firebase = require('firebase');
@@ -9,6 +8,7 @@ const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
 const WordItem = require('./components/WordItem');
+const Spinner = require('./components/common/Spinner');
 const styles = require('./styles.js');
 
 
@@ -57,7 +57,8 @@ class FirebaseReactNative extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      items: []
+      items: [],
+      loading: false
     };
     this.itemsRef = this.getRef().child('items');
     this._handleResults = this._handleResults.bind(this);
@@ -95,7 +96,6 @@ class FirebaseReactNative extends Component {
   componentDidMount() {
     this.listenForItems(this.itemsRef);
   }
-
 
 
   render() {
