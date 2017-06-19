@@ -86,15 +86,17 @@ class FirebaseReactNative extends Component {
 
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(items),
-        items: items
+        items: items,
+        loading: false
       });
 
     });
   }
 
 
-  componentDidMount() {
+ componentDidMount() {
     this.listenForItems(this.itemsRef);
+
   }
 
 
@@ -133,11 +135,21 @@ class FirebaseReactNative extends Component {
 
   _renderItem(item) {
     const { navigate } = this.props.navigation;
-    return (
-      <ListItem item={item} onPress={() =>
-          navigate('Details', {...item} )}  />
-    );
+    const{loading} = this.state;
+
+    if(this.state.loading){
+      return
+        <Spinner/>;
+    }else{
+        return (
+        <ListItem item={item} onPress={() =>
+            navigate('Details', {...item} )}  />
+        );
+    }
   }
+}
+
+
 
   _handleResults(results){
     this.setState({dataSource: this.state.dataSource.cloneWithRows(results)})
