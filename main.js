@@ -58,7 +58,7 @@ class FirebaseReactNative extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       items: [],
-      loading: false
+      loading: true
     };
     this.itemsRef = this.getRef().child('items');
     this._handleResults = this._handleResults.bind(this);
@@ -71,6 +71,7 @@ class FirebaseReactNative extends Component {
   }
 
   listenForItems(itemsRef) {
+
     itemsRef.on('value', (snap) => {
 
       // get children as an array
@@ -102,52 +103,46 @@ class FirebaseReactNative extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const {loading} =this.state;
+
+    if (this.state.loading) {
+      return (
+         <Spinner/>
+         )
+      }else{
+        return(
+          <View style={styles.container}>
 
 
-
-    return (
-
-      <View style={styles.container}>
+            <StatusBar title="Street French" />
 
 
-        <StatusBar title="Street French" />
+            <SearchBar
+              ref={(ref) => this.searchBar = ref}
+              data={this.state.items}
+              handleResults={this._handleResults.bind(this)}
+              showOnLoad
+              allDataOnEmptySearch
+            />
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this._renderItem.bind(this)}
+              enableEmptySections={true}
+              style={styles.listview}/>
 
 
-        <SearchBar
-          ref={(ref) => this.searchBar = ref}
-          data={this.state.items}
-          handleResults={this._handleResults.bind(this)}
-          showOnLoad
-          allDataOnEmptySearch
-        />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-          enableEmptySections={true}
-          style={styles.listview}/>
-
-
-      </View>
-    )
+          </View>
+          );
+      }
   }
 
-
-
-  _renderItem(item) {
-    const { navigate } = this.props.navigation;
-    const{loading} = this.state;
-
-    if(this.state.loading){
-      return
-        <Spinner/>;
-    }else{
-        return (
-        <ListItem item={item} onPress={() =>
-            navigate('Details', {...item} )}  />
-        );
-    }
-  }
-}
+   _renderItem(item) {
+     const { navigate } = this.props.navigation;
+     return (
+     <ListItem item={item} onPress={() =>
+     navigate('Details', {...item} )} />
+     );
+ }
 
 
 
