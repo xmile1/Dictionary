@@ -8,7 +8,7 @@ const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
 const WordItem = require('./components/WordItem');
-const Spinner = require('./components/common/Spinner');
+import Spinner from './components/common/Spinner';
 const styles = require('./styles.js');
 
 
@@ -71,6 +71,7 @@ class FirebaseReactNative extends Component {
   }
 
   listenForItems(itemsRef) {
+    this.state.loading = false;
 
     itemsRef.on('value', (snap) => {
 
@@ -103,11 +104,10 @@ class FirebaseReactNative extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const {loading} =this.state;
 
     if (this.state.loading) {
       return (
-         <Spinner/>
+         <Spinner />
          )
       }else{
         return(
@@ -132,18 +132,19 @@ class FirebaseReactNative extends Component {
 
 
           </View>
-          );
+          )
       }
   }
+
+
 
    _renderItem(item) {
      const { navigate } = this.props.navigation;
      return (
-     <ListItem item={item} onPress={() =>
-     navigate('Details', {...item} )} />
-     );
- }
-
+         <ListItem item={item} onPress={() =>
+         navigate('Details', {...item} )} />
+         );
+    }
 
 
   _handleResults(results){
@@ -151,6 +152,8 @@ class FirebaseReactNative extends Component {
   }
 
 }
+
+
 
 const App = StackNavigator({
   Home: { screen: FirebaseReactNative },
