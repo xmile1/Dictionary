@@ -3,12 +3,12 @@ import Expo from 'expo';
 import React, {Component, TextInput, ActivityIndicator} from 'react';
 import ReactNative from 'react-native';
 import SearchBar from 'react-native-searchbar';
-const firebase = require('firebase');
-const StatusBar = require('./components/StatusBar');
-const ActionButton = require('./components/ActionButton');
-const ListItem = require('./components/ListItem');
-const WordItem = require('./components/WordItem');
+import firebase from 'firebase';
+import StatusBar from './components/StatusBar';
+import ListOfWords from './components/ListOfWords';
+import WordItem from './components/WordItem';
 import Spinner from './components/common/Spinner';
+import { List, ListItem } from 'react-native-elements';
 const styles = require('./styles.js');
 
 
@@ -124,7 +124,8 @@ class FirebaseReactNative extends Component {
               showOnLoad
               allDataOnEmptySearch
             />
-            <ListView
+
+              <ListView
               dataSource={this.state.dataSource}
               renderRow={this._renderItem.bind(this)}
               enableEmptySections={true}
@@ -138,13 +139,20 @@ class FirebaseReactNative extends Component {
 
 
 
-   _renderItem(item) {
+ _renderItem(item) {
      const { navigate } = this.props.navigation;
      return (
-         <ListItem item={item} onPress={() =>
-         navigate('Details', {...item} )} />
-         );
-    }
+      <ListItem
+        title={
+               <ListOfWords item={item} onPress={() =>
+               navigate('Details', {...item} )} />
+               }
+        onPressRightIcon= {()=>
+               navigate('Details', {...item} )
+              }
+        />
+      );
+}
 
 
   _handleResults(results){

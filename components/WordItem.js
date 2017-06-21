@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactNative from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 const styles = require('../styles.js');
 const firebase = require('firebase');
 const { View, TouchableHighlight, Text } = ReactNative;
@@ -12,7 +13,7 @@ class WordItem extends Component {
   render() {
 const {english, english_erudite} = this.props.navigation.state.params;
 
-    return (
+   return (
       <TouchableHighlight>
         <View style={styles.li}>
           <Text style={styles.liText} >{english}</Text>
@@ -23,4 +24,4 @@ const {english, english_erudite} = this.props.navigation.state.params;
   }
 }
 
-module.exports = WordItem;
+export default WordItem;

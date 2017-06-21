@@ -5,7 +5,7 @@ const { View, TouchableHighlight, Text } = ReactNative;
 
 
 
-class ListItem extends Component {
+class ListOfWords extends Component {
   render() {
     return (
       <TouchableHighlight onPress={this.props.onPress}>
@@ -19,4 +19,4 @@ class ListItem extends Component {
 
 
 
-module.exports = ListItem;
+export default ListOfWords;
