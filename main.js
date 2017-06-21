@@ -8,6 +8,7 @@ import StatusBar from './components/StatusBar';
 import ListOfWords from './components/ListOfWords';
 import WordItem from './components/WordItem';
 import Spinner from './components/common/Spinner';
+import WordOfTheDay from './components/WordOfTheDay';
 import { List, ListItem } from 'react-native-elements';
 const styles = require('./styles.js');
 
@@ -46,7 +47,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 class FirebaseReactNative extends Component {
 
  static navigationOptions = {
-    title: 'Welcome',
+    title: 'Street English',
   };
 
 
@@ -60,7 +61,7 @@ class FirebaseReactNative extends Component {
       items: [],
       loading: true
     };
-    this.itemsRef = this.getRef().child('items');
+    this.itemsRef = this.getRef().child('items').limitToLast(4);
     this._handleResults = this._handleResults.bind(this);
   }
 
@@ -129,7 +130,9 @@ class FirebaseReactNative extends Component {
               dataSource={this.state.dataSource}
               renderRow={this._renderItem.bind(this)}
               enableEmptySections={true}
-              style={styles.listview}/>
+              />
+
+              <WordOfTheDay/>
 
 
           </View>
@@ -139,7 +142,7 @@ class FirebaseReactNative extends Component {
 
 
 
- _renderItem(item) {
+_renderItem(item) {
      const { navigate } = this.props.navigation;
      return (
       <ListItem
@@ -155,6 +158,8 @@ class FirebaseReactNative extends Component {
 }
 
 
+
+
   _handleResults(results){
     this.setState({dataSource: this.state.dataSource.cloneWithRows(results)})
   }
@@ -166,6 +171,7 @@ class FirebaseReactNative extends Component {
 const App = StackNavigator({
   Home: { screen: FirebaseReactNative },
   Details: { screen: WordItem },
+  Daily : {screen: WordOfTheDay},
 });
 
 

@@ -17,4 +17,4 @@ class StatusBar extends Component {
   }
 }
 
-module.exports = StatusBar;
+export default StatusBar;
