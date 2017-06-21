@@ -10,6 +10,8 @@ import WordItem from './components/WordItem';
 import Spinner from './components/common/Spinner';
 import WordOfTheDay from './components/WordOfTheDay';
 import { List, ListItem } from 'react-native-elements';
+import SplashScreen from './components/SplashScreen';
+import Animation from 'lottie-react-native';
 const styles = require('./styles.js');
 
 
@@ -21,6 +23,7 @@ const {
   View,
   TouchableHighlight,
   TouchableOpacity,
+  Animated
 } = ReactNative;
 
 
@@ -47,7 +50,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 class FirebaseReactNative extends Component {
 
  static navigationOptions = {
-    title: 'Street English',
+    title: 'Street French !',
   };
 
 
@@ -108,14 +111,14 @@ class FirebaseReactNative extends Component {
 
     if (this.state.loading) {
       return (
-         <Spinner />
+         <SplashScreen />
          )
       }else{
         return(
           <View style={styles.container}>
 
 
-            <StatusBar title="Street French" />
+            <StatusBar title="Street French, best app to learn true french !" />
 
 
             <SearchBar

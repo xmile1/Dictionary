@@ -19,16 +19,24 @@ class WordOfTheDay extends Component{
 
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      items: [],
-      loading: true
+        dataSource: ds.cloneWithRows([])
     };
-  }
+}
+
+
+componentWillMount() {
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.setState({
+        dataSource: ds.cloneWithRows(this.props.items)
+    })
+}
+
+
 
   render(){
+
 
     return(
       <Card
@@ -48,19 +56,12 @@ class WordOfTheDay extends Component{
   }
 
 
- _renderWordOfTheDay(item) {
-     const { navigate } = this.props.navigation;
-     return (
-      <ListItem
-        title={
-              <View item={item}
-               onPress={() =>
-               navigate('Details', {...item} )}
-               />
-              }
-        />
-      );
-  }
+   _renderWordOfTheDay(item) {
+       const { navigate } = this.props.navigation;
+       return (
+        <ListItem item="{item}" />
+        );
+    }
 
 }
 
