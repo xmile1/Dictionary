@@ -61,6 +61,9 @@ class FirebaseReactNative extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      wordOfTheDayData: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
       items: [],
       loading: true
     };
@@ -90,8 +93,13 @@ class FirebaseReactNative extends Component {
         });
       });
 
+      //choose word for the Day
+      let i = Math.floor(Math.random() * items.length)
+      var selectedItem = items[i]
+
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(items),
+        wordOfTheDayData: this.state.wordOfTheDayData.cloneWithRows([selectedItem]),
         items: items,
         loading: false
       });
@@ -135,7 +143,10 @@ class FirebaseReactNative extends Component {
               enableEmptySections={true}
               />
 
-              <WordOfTheDay/>
+              <WordOfTheDay
+              dataSource={this.state.wordOfTheDayData}
+              renderRow={this._renderItem.bind(this)}
+              />
 
 
           </View>
@@ -179,3 +190,4 @@ const App = StackNavigator({
 
 
 Expo.registerRootComponent(App);
+
