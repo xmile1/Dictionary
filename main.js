@@ -42,7 +42,9 @@ const firebaseConfig = {
     storageBucket: "streetfrench-a84df.appspot.com",
     messagingSenderId: "551358813028"
 };
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase
+  .initializeApp(firebaseConfig)
+  ;
 
 
 
@@ -89,6 +91,7 @@ class FirebaseReactNative extends Component {
           french: child.val().french,
           english: child.val().english,
           english_erudite: child.val().english_erudite,
+          likes: child.val().likes,
           _key: child.key
         });
       });
