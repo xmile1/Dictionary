@@ -8,11 +8,17 @@
   "dependencies": {
     "@expo/ex-navigation": "^3.0.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "expo": "17.0.0",
+    "expo": "27.0.2",
     "firebase": "^4.1.2",
     "lottie-react-native": "^1.1.1",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
-    "react-navigation": "^1.0.0-beta.11"
-  }
+    "react-navigation": "^1.0.0-beta.11",
+    "snyk": "^1.83.0"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
